@@ -7,28 +7,24 @@ Este proyecto, "Optimizador de Horarios IPN" (OHIPN), es una solución diseñada
 
 Para instalar y ejecutar este proyecto, sigue los siguientes pasos:
 
-    Clona el repositorio a tu local:
+## Clona el repositorio a tu local:
 
 bash
-
 `git clone https://github.com/username/OHIPN.git`
 
     Navega al directorio clonado:
 
 bash
-
 `cd OHIPN`
 
     Asegúrate de tener instaladas todas las dependencias necesarias. Este proyecto utiliza la biblioteca NetworkX para manejo de grafos y pandas para manejo de datos:
 
 bash
-
 `pip install networkx pandas`
 
     Ejecuta el script principal:
 
 bash
-
 `python main.py`
 
 # Uso
@@ -42,10 +38,10 @@ Además, se proporciona un script (create.py) para convertir los datos de las ma
 
 Si deseas contribuir a este proyecto, puedes hacerlo de las siguientes formas:
 
-    Reportando errores.
-    Sugiriendo nuevas características.
-    Mejorando el código o la documentación.
-    Compartiendo el proyecto con otros.
+* Reportando errores.
+* Sugiriendo nuevas características.
+* Mejorando el código o la documentación.
+* Compartiendo el proyecto con otros.
 
 Para contribuir, por favor primero crea un issue en el repositorio para discutir lo que te gustaría cambiar.
 # Licencia
@@ -56,6 +52,6 @@ Este proyecto está licenciado bajo los términos de la licencia MIT.
 Si tienes alguna pregunta o comentario, por favor crea un issue en el repositorio y estaremos encantados de ayudarte.
 # Autores
 
-    Josué Adalid Juárez Botello
+* Josué Adalid Juárez Botello
 
 Este proyecto es mantenido por estudiantes del Instituto Politécnico Nacional. Agradecemos a todos los que han contribuido a su desarrollo.
