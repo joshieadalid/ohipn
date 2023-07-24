@@ -11,25 +11,25 @@ Para instalar y ejecutar este proyecto, sigue los siguientes pasos:
 
 bash
 
-git clone https://github.com/username/OHIPN.git
+`git clone https://github.com/username/OHIPN.git`
 
     Navega al directorio clonado:
 
 bash
 
-cd OHIPN
+`cd OHIPN`
 
     Asegúrate de tener instaladas todas las dependencias necesarias. Este proyecto utiliza la biblioteca NetworkX para manejo de grafos y pandas para manejo de datos:
 
 bash
 
-pip install networkx pandas
+`pip install networkx pandas`
 
     Ejecuta el script principal:
 
 bash
 
-python main.py
+`python main.py`
 
 # Uso
 
