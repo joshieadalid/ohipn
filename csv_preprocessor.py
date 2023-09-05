@@ -1,8 +1,6 @@
 import json
-
 import numpy as np
 import pandas as pd
-
 
 def create():
     # Leer el archivo CSV
@@ -23,6 +21,7 @@ def create():
             "nombre": row['Asignatura'],
             "grupo": row['Grupo'],
             "profesor": row['Profesor'],
+            "fijada": row['fijada'],  # Añadido el atributo fijada
             "horario": []
         }
 
