@@ -1,13 +1,12 @@
 import json
 from datetime import datetime
 from itertools import combinations
-from operator import itemgetter
 
 import networkx as nx
 
 
 def cargar_datos():
-    with open('horarios.json', 'r') as f:
+    with open('materias.json', 'r') as f:
         data = json.load(f)
     return data['materias']
 
@@ -94,33 +93,56 @@ def calcular_materias_diferentes(horario):
 def main():
     clases = cargar_datos()
 
+    # Separar clases en fijadas y opcionales
+    clases_fijadas = [clase for clase in clases if clase.get('fijada', False)]
+    clases_opcionales = [clase for clase in clases if not clase.get('fijada', False)]
+
+    # Comprobar si las clases fijadas se traslapan entre sí
+    for clase1, clase2 in combinations(clases_fijadas, 2):
+        if se_traslapan(clase1, clase2):
+            print(f"Las clases fijadas {clase1['nombre']} y {clase2['nombre']} se traslapan. No se puede continuar.")
+            return  # Detiene el programa si hay un traslape
+
+    # Descartar clases opcionales que se traslapan con clases fijadas
+    clases_opcionales = [clase for clase in clases_opcionales if
+                         all(not se_traslapan(clase, fijada) for fijada in clases_fijadas)]
+
+    # Construir el grafo
     g = nx.Graph()
-    for clase in clases:
+    todas_las_clases = clases_fijadas + clases_opcionales
+
+    for clase in todas_las_clases:
         g.add_node(json.dumps(clase))
 
-    for clase1, clase2 in combinations(clases, 2):
+    for clase1, clase2 in combinations(todas_las_clases, 2):
         if not se_traslapan(clase1, clase2):
             g.add_edge(json.dumps(clase1), json.dumps(clase2))
 
+    # Encontrar los cliques en el grafo
     cliques = list(nx.find_cliques(g))
+
+    # Convertir de JSON a diccionarios
     horarios = [[json.loads(clase) for clase in clique] for clique in cliques]
 
+    # Calcular fragmentación y cantidad de materias
     horarios_fragmentacion_materias = []
     for i, horario in enumerate(horarios):
-        horarios_fragmentacion_materias.append({'horario': horario, 'fragmentacion': calcular_fragmentacion(horario),
-                                                'materias': calcular_materias_diferentes(horario)})
+        horarios_fragmentacion_materias.append({
+            'horario': horario,
+            'fragmentacion': calcular_fragmentacion(horario),
+            'materias': calcular_materias_diferentes(horario)
+        })
 
+    # Ordenar los horarios por la cantidad de materias y fragmentación
     horarios_ordenados = sorted(horarios_fragmentacion_materias, key=lambda x: (-x['materias'], x['fragmentacion']))
-    horarios_filtrados = [horario for horario in horarios_ordenados if horario['materias'] <= 7]
-    # Limitar la impresión a 25 horarios
-    for i, horario in enumerate(horarios_filtrados[:100]):
+
+    # Imprimir horarios
+    for i, horario in enumerate(horarios_ordenados[:25]):  # limitar a 25 horarios
         print(f'Horario {i + 1}:')
         imprimir_horario(horario['horario'])
-
         print(f'Fragmentación: {horario["fragmentacion"]}')
         print(f'Materias: {horario["materias"]}')
         print()
-
 
 
 if __name__ == '__main__':
